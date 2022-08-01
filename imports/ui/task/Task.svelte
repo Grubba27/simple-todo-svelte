@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { TasksCollection } from "/imports/api/TaskCollection";
 
   export let task;

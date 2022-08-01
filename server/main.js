@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { TasksCollection } from "/imports/api/TaskCollection";
-
+import {list as todoList} from '/imports/api/list';
 const insertTask = taskText =>
   TasksCollection.insert({ text: taskText });
 
@@ -18,12 +18,6 @@ Meteor.startup(() => {
     });
   }
   if (TasksCollection.find().count() === 0) {
-    [
-      'Buy milk',
-      'Buy eggs',
-      'Buy bread',
-      'Buy cheese',
-      'Do other stuff',
-    ].forEach(taskText => insertTask(taskText, user));
+    todoList.forEach(taskText => insertTask(taskText, user));
   }
 });

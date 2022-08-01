@@ -10,7 +10,8 @@
   "dependencies": {
     "@babel/runtime": "^7.17.9",
     "meteor-node-stubs": "^1.2.1",
-    "svelte": "^3.46.4"
+    "svelte": "^3.46.4",
+    "svelte-preprocess": "^4.10.7"
   },
   "meteor": {
     "mainModule": {
@@ -20,6 +21,6 @@
     "testModule": "tests/main.js"
   },
   "devDependencies": {
-    "typescript": "^4.7.3"
+    "typescript": "^4.7.4"
   }
 }
