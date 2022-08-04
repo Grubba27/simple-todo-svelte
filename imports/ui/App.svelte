@@ -17,18 +17,30 @@
   const userFilter = user ? { userId: user._id } : {};
   const pendingOnlyFilter = { ...hideCompletedFilter, ...userFilter };
 
-  let tasks
-  $m: tasks = user
-    ? TasksCollection.find(
-      hideCompleted ? pendingOnlyFilter : userFilter,
-      { sort: { createdAt: -1 } }
-    ).fetch()
-    : [];
+  let tasks;
+  $m: {
+    tasks = user
+      ? TasksCollection.find(
+        hideCompleted ? pendingOnlyFilter : userFilter,
+        { sort: { createdAt: -1 } }
+      ).fetch()
+      : [];
+  }
 
-  let incompleteCount
-  $m: incompleteCount = user
-    ? TasksCollection.find(pendingOnlyFilter).count()
-    : 0;
+  let incompleteCount;
+  $m: {
+    incompleteCount = user
+      ? TasksCollection.find(pendingOnlyFilter).count()
+      : 0;
+  }
+
+  let lastTask;
+  $m: {
+    lastTask = user
+      ? TasksCollection.findOne({}, { sort: { createdAt: -1 } })
+      : null;
+  }
+
 
   const logout = () => Meteor.logout();
 
@@ -65,8 +77,11 @@
                 </button>
             </div>
             <ul class="tasks">
+                last: text: {lastTask?.text} & {lastTask?.hash?.myValue} & {lastTask?.hash?.myOtherValue}
                 {#each tasks as task (task._id)}
-                    myValue: {task?.hash?.myValue} & myOtherValue: {task?.hash?.myOtherValue}
+                    <br/>
+                    myValue: {task?.hash?.myValue}
+                    & myOtherValue: {task?.hash?.myOtherValue}
                     <Task task={task}/>
                 {/each}
             </ul>
