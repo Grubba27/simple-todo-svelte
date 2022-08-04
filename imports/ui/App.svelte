@@ -3,6 +3,8 @@
   import { TasksCollection } from "../api/TaskCollection";
   import TaskForm from "/imports/ui/task/TaskForm.svelte";
   import LoginForm from "/imports/ui/login/LoginForm.svelte";
+  import { W } from "/imports/api/pub/wrapper";
+  import { onMount } from "svelte";
 
   let hideCompleted = false;
   const setHideCompleted = (value) => hideCompleted = value;
@@ -11,7 +13,7 @@
 
   let user;
   $m: user = Meteor.user();
-
+  const handler = Meteor.subscribe('tasks');
   const userFilter = user ? { userId: user._id } : {};
   const pendingOnlyFilter = { ...hideCompletedFilter, ...userFilter };
 
@@ -29,6 +31,13 @@
     : 0;
 
   const logout = () => Meteor.logout();
+
+  onMount(() => {
+    console.log('onmount');
+    W.sub('tasks.insert', (task) => {
+      console.log(task);
+    });
+  });
 
 
 </script>
@@ -57,6 +66,7 @@
             </div>
             <ul class="tasks">
                 {#each tasks as task (task._id)}
+                    myValue: {task?.hash?.myValue} & myOtherValue: {task?.hash?.myOtherValue}
                     <Task task={task}/>
                 {/each}
             </ul>

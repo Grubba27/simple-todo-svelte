@@ -1,18 +1,18 @@
-<script>
-  import { TasksCollection } from "/imports/api/TaskCollection";
+<script lang="ts">
+  import {TasksCollection} from "/imports/api/TaskCollection";
 
   export let user;
-
   let taskText = '';
   const submit = () => {
     TasksCollection.insert({
       text: taskText,
+      owner: user._id,
       createdAt: new Date(),
-      userId: user._id,
+      completed: false,
+      hash: {myValue: "hello", myOtherValue: "whaterver"}
     });
     taskText = '';
   }
-
 </script>
 
 

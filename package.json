@@ -2,13 +2,14 @@
   "name": "simple-todo-svelte",
   "private": true,
   "scripts": {
-    "start": "meteor run",
+    "start": "MONGO_URL=\"mongodb://localhost:27017/links\" meteor run",
     "test": "meteor test --once --driver-package meteortesting:mocha",
     "test-app": "TEST_WATCH=1 meteor test --full-app --driver-package meteortesting:mocha",
     "visualize": "meteor --production --extra-packages bundle-visualizer"
   },
   "dependencies": {
     "@babel/runtime": "^7.17.9",
+    "@types/meteor": "^2.7.1",
     "meteor-node-stubs": "^1.2.1",
     "svelte": "^3.46.4",
     "svelte-preprocess": "^4.10.7"
@@ -17,6 +18,11 @@
     "mainModule": {
       "client": "client/main.js",
       "server": "server/main.js"
+    },
+    "nodeModules": {
+      "recompile": {
+        "svelte": ["legacy"]
+      }
     },
     "testModule": "tests/main.js"
   },
